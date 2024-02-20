@@ -39,7 +39,6 @@ tic;x3=sri_color(x,1);toc;
 figure(1);imshow(x1/255,[]);
 figure(1);imshow(x2/255,[]);
 figure(1);imshow(x3/255,[]);
-%The third one looked kind of worse
 
 % 2. rotate an image all the way round (1.5 points)
 % read in an image (clock.raw) in RAW format
@@ -69,7 +68,7 @@ figure(2);imshow([x y]/255,[]);
 % Hint: this example shows the difference between continuous and discrete
 % spaces (information loss is inevitable when you interpolate missing
 % pixels).
-%The second image looks grayer
+%{your answer goes here}
 
 % 3. digital fun mirror and really cool to try it out (2 points)
 % work with the image of Bill Gates or Steve Jobs or anyone else
@@ -82,14 +81,13 @@ r1=r+repmat(w,N,1)';
 y=griddata(r1,c,x,r,c,'cubic');
 imshow(y,[]);
 % pinch-effect fun mirror 
-rr=r-100;cc=c-100;
+rr=r-10;cc=c-10;
 a=1.2; % a controls the distortion effect
-r2=100+sign(rr).*abs(rr).^a;
-c2=100+sign(cc).*abs(cc).^a;
+r2=10+sign(rr).*abs(rr).^a;
+c2=10+sign(cc).*abs(cc).^a;
 z=griddata(r2,c2,x,r,c,'cubic');
 imshow([x y z],[]);
 %<use your imagination to create a cool distorted image!>
-% Why does he look like ET
 
 
 % Part 2: Image enhancement experiments (5 points)
@@ -107,18 +105,17 @@ figure(11); histogram(h_ref); figure(12); histogram(h_x);
 % compare the two results
 %<display the two histograms side by side> 
 %{do they look similar?}
-%The histograms are a match
+%The histograms 
 
 % 2. enhancement of a microarray image (1 point)
-x=imread('microarray.png');
+x=double(imread('microarray.png'));
 % >help histeq 
-x_enh1=histeq(x);
-imshow(x_enh1,[]);
+%x_enh1=<enhance this image by histogram equalization>;
+imshow(x_enh1/255,[]);
 % >help adapthisteq 
-x_enh2=adapthisteq(x);
+%x_enh2=<enhance this image by adaptive histogram equalization>;
 imshow(x_enh2/255,[]);
  %{what is the difference between two enhanced images?}
- %The first one is a lot brighter, the adapthisteq is dark
  
 % 3. histogram matching (1 point)
 % Learn how to use histeq function to process an input image A such that
@@ -127,7 +124,7 @@ A=double(imread('cube.tif'));
 B=double(imread('cameraman.tif'));
 % create a new image (A_modified) such its histogram is similar to that
 % of image B (they won't be identical due to low dynamic range)
-%A_modified=;
+%A_modified=<your code enters here>;
 imshow(A_modified/255,[]);
 hA=hist(A_modified(:),1:256);hB=hist(B(:),1:256);
 i=1:256;plot(i,hA,i,hB);
