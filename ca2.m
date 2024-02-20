@@ -127,7 +127,7 @@ A=double(imread('cube.tif'));
 B=double(imread('cameraman.tif'));
 % create a new image (A_modified) such its histogram is similar to that
 % of image B (they won't be identical due to low dynamic range)
-%A_modified=;
+A_modified=imhistmatch(A,B);
 imshow(A_modified/255,[]);
 hA=hist(A_modified(:),1:256);hB=hist(B(:),1:256);
 i=1:256;plot(i,hA,i,hB);
