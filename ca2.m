@@ -110,12 +110,12 @@ figure(11); histogram(h_ref); figure(12); histogram(h_x);
 %The histograms are a match
 
 % 2. enhancement of a microarray image (1 point)
-x=imread('microarray.png');
+x=double(imread('microarray.png'));
 % >help histeq 
-x_enh1=histeq(x);
+x_enh1=histeq(uint8(x));
 imshow(x_enh1,[]);
 % >help adapthisteq 
-x_enh2=adapthisteq(x);
+x_enh2=adapthisteq(uint8(x));
 imshow(x_enh2/255,[]);
  %{what is the difference between two enhanced images?}
  %The first one is a lot brighter, the adapthisteq is dark
@@ -123,11 +123,11 @@ imshow(x_enh2/255,[]);
 % 3. histogram matching (1 point)
 % Learn how to use histeq function to process an input image A such that
 % the histogram of the output matches that of a target image B
-A=double(imread('cube.tif'));
-B=double(imread('cameraman.tif'));
+A=(imread('cube.tif'));
+B=(imread('cameraman.tif'));
 % create a new image (A_modified) such its histogram is similar to that
 % of image B (they won't be identical due to low dynamic range)
-A_modified=imhistmatch(A,B);
+A_modified=histeq(A,imhist(B));
 imshow(A_modified/255,[]);
 hA=hist(A_modified(:),1:256);hB=hist(B(:),1:256);
 i=1:256;plot(i,hA,i,hB);
