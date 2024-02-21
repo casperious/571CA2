@@ -127,8 +127,10 @@ A=(imread('cube.tif'));
 B=(imread('cameraman.tif'));
 % create a new image (A_modified) such its histogram is similar to that
 % of image B (they won't be identical due to low dynamic range)
+A_mod=imhistmatch(A/255,B/255)*255;
 A_modified=histeq(A,imhist(B));
 imshow(A_modified/255,[]);
+%imshow(A_mod/255,[]);
 hA=hist(A_modified(:),1:256);hB=hist(B(:),1:256);
 i=1:256;plot(i,hA,i,hB);
 
@@ -136,11 +138,44 @@ i=1:256;plot(i,hA,i,hB);
 % try to apply what you have learned to enhance a poor-quality
 % image due to low-resolution and low-illumination (teapot.png). 
 % Hint: you might want to combine image enhancement with image interpolation.
-A=double(imread('teapot.png'));
+A=imread('teapot.png');
+%
+%A_hist = histeq(A);
+%imshow(A_hist);%
+%whos A_hist;
+%for k = size(A,3):-1:1
+%    A2(:,:,k) = interp2(A(:,:,k),'nearest'); %interpolation
+%end
+%whos A2;
 %<your codes go here and name the enhanced image B>
+%A_interp = interp2(A2,'nearest');
+%B=A_hist;
+%B = interp2(double(A_hist),'nearest')
 % side-by-side comparison
-subplot(1,2,1);imshow(A/255,[]);
-subplot(1,2,2);imshow(B/255,[]);
+% Load the low-quality image
+lowResImage = imread('teapot.png');
+
+% Convert the image to double for processing
+lowResImage = double(lowResImage);
+
+% Increase image resolution using interpolation (bicubic interpolation)
+highResImage = imresize(lowResImage, 2, 'bicubic');
+
+% Enhance image contrast using histogram equalization
+highResImage = histeq(highResImage);
+
+% Increase image brightness and adjust contrast
+highResImage = imadjust(highResImage, [0.2 0.8], [0 1]);
+
+% Display the results
+figure;
+subplot(1, 2, 1);
+imshow(lowResImage);
+title('Low-Resolution Image');
+B = highResImage;
+subplot(1, 2, 2);
+imshow(highResImage);
+title('Enhanced Image');
 
 % Bonus Part: Valentine's Challenge (1 point)
 x=imread('castle_orig.pbm');
